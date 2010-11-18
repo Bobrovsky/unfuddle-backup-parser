@@ -5,6 +5,8 @@ using System.Xml;
 using System.IO;
 using System.Web;
 
+using OfficeOpenXml;
+
 namespace UnfuddleBackupParser
 {
     class Tickets
@@ -33,17 +35,14 @@ namespace UnfuddleBackupParser
             parse(element);
         }
 
-        public void Save(Microsoft.Office.Interop.Excel.Worksheet worksheet,
+        public void Save(ExcelWorksheet worksheet,
             string project, Components components, Milestones milestones,
             People people, bool cleanupEvents)
         {
             int row = 1;
 
-            Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)worksheet.Cells[1, 7];
-            range.EntireColumn.ColumnWidth = 50;
-
-            range = (Microsoft.Office.Interop.Excel.Range)worksheet.Cells[1, 8];
-            range.EntireColumn.ColumnWidth = 50;
+            worksheet.Column(7).Width = 50;
+            worksheet.Column(8).Width = 50;
 
             saveLine(worksheet, row, "cmd", "dt", "sProject", "sArea",
                 "sFixFor", "ixPriority", "sTitle", "sEvent", "sPersonAssignedTo",
@@ -181,25 +180,25 @@ namespace UnfuddleBackupParser
             return milestone;
         }
 
-        private static void saveLine(Microsoft.Office.Interop.Excel.Worksheet worksheet, int row,
+        private static void saveLine(ExcelWorksheet worksheet, int row,
             string command, string time, string project, string area, string milestone,
             string priority, string title, string description, string assignedTo,
             string dueOn, string reporterId, string attachments)
         {
             int col = 1;
 
-            worksheet.Cells[row, col++] = command;
-            worksheet.Cells[row, col++] = time;
-            worksheet.Cells[row, col++] = project;
-            worksheet.Cells[row, col++] = area;
-            worksheet.Cells[row, col++] = milestone;
-            worksheet.Cells[row, col++] = priority;
-            worksheet.Cells[row, col++] = title;
-            worksheet.Cells[row, col++] = description;
-            worksheet.Cells[row, col++] = assignedTo;
-            worksheet.Cells[row, col++] = dueOn;
-            worksheet.Cells[row, col++] = reporterId;
-            worksheet.Cells[row, col++] = attachments;
+            worksheet.Cells[row, col++].Value = command;
+            worksheet.Cells[row, col++].Value = time;
+            worksheet.Cells[row, col++].Value = project;
+            worksheet.Cells[row, col++].Value = area;
+            worksheet.Cells[row, col++].Value = milestone;
+            worksheet.Cells[row, col++].Value = priority;
+            worksheet.Cells[row, col++].Value = title;
+            worksheet.Cells[row, col++].Value = description;
+            worksheet.Cells[row, col++].Value = assignedTo;
+            worksheet.Cells[row, col++].Value = dueOn;
+            worksheet.Cells[row, col++].Value = reporterId;
+            worksheet.Cells[row, col++].Value = attachments;
         }
 
         private void parse(XmlElement element)

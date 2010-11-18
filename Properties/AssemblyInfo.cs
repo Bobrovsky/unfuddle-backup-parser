@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("UnfuddleBackupParser")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Unfuddle Backup Parser")]
+[assembly: AssemblyDescription("Creates files with contents from a Unfuddle's backup.xml")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("UnfuddleBackupParser")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyCompany("Bit Miracle")]
+[assembly: AssemblyProduct("Unfuddle Backup Parser")]
+[assembly: AssemblyCopyright("Copyright © Bit Miracle 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

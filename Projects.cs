@@ -5,6 +5,8 @@ using System.Xml;
 using System.IO;
 using System.Web;
 
+using OfficeOpenXml;
+
 namespace UnfuddleBackupParser
 {
     class Projects
@@ -70,20 +72,21 @@ namespace UnfuddleBackupParser
 
         public void SaveTickets(string path, People people, bool cleanupEvents)
         {
-            Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
-            Microsoft.Office.Interop.Excel.Workbook workbook = app.Workbooks.Add(1);
-            Microsoft.Office.Interop.Excel.Worksheet worksheet = (Microsoft.Office.Interop.Excel.Worksheet)workbook.Sheets[1];
-
-            foreach (KeyValuePair<int, Project> pair in m_projects)
+            using (ExcelPackage pkg = new ExcelPackage())
             {
-                Project project = pair.Value;
-                Tickets tickets = project.tickets;
-                if (tickets != null)
-                    tickets.Save(worksheet, project.title, project.components, project.milestones, people, cleanupEvents);
-            }
+                ExcelWorksheet worksheet = pkg.Workbook.Worksheets.Add("Tickets");
 
-            workbook.SaveAs(path);
-            workbook.Close();
+                foreach (KeyValuePair<int, Project> pair in m_projects)
+                {
+                    Project project = pair.Value;
+                    Tickets tickets = project.tickets;
+                    if (tickets != null)
+                        tickets.Save(worksheet, project.title, project.components, project.milestones, people, cleanupEvents);
+                }
+
+                FileInfo newFile = new FileInfo(path);
+                pkg.SaveAs(newFile);
+            }
         }
 
         private void parse(XmlElement element)
